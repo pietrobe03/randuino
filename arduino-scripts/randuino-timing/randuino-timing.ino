@@ -8,12 +8,8 @@ int led3Pin = 11;
 // Definition of input pin
 int inpPin = 9;
 
-// Shuffled array containing all digits
-int ranList[] = {6,8,1,5,4,7,0,2,9,3};
-
 // QueueList (FIFO) buffers generated numbers
 QueueList<short> numbers;
-
 
 // Setup code runs once at initialization
 void setup() {
@@ -27,13 +23,12 @@ void setup() {
   pinMode(led2Pin, OUTPUT);
   pinMode(led3Pin, OUTPUT);
   pinMode(inpPin, INPUT);
-  pinMode(A0, INPUT);
 }
 
-// Periodically ran code
+// Periodically running code
 void loop() {
   
-  // Stores current iteration index as a digit between 0 and 9
+  // Stores current iteration index as a digit between 0 and 255
   static unsigned short number = 0;
   
   // Stores if input signal existed in previous iteration
