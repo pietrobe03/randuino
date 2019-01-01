@@ -1,17 +1,17 @@
-#ifndef ARDUINOCONNECT_H
-#define ARDUINOCONNECT_H
+#ifndef RANDUINOCONNECT_H
+#define RANDUINOCONNECT_H
 
 #include <QObject>
 #include <QSerialPort>
 #include <QTimer>
 
-class ArduinoConnect : public QObject
+class RanduinoConnect : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ArduinoConnect(QObject *parent = nullptr);
-    ~ArduinoConnect();
+    explicit RanduinoConnect(QObject *parent = nullptr);
+    ~RanduinoConnect();
 
     enum Trigger {DISCONNECT};
 
