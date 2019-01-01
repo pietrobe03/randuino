@@ -7,5 +7,6 @@ The `arduino-scripts` folder contains scripts for multiple kinds of randomizers.
 * `randuino-value.ino` works by picking a random number depending on the current on a analog port.
 
 ## Randuino library
-The randuino library helps communicationg to a randuino. 
-It is written in C++ and Qt 5.
+The randuino library helps communicationg to a randuino. It is written in C++ and Qt5 and can be used in any Qt5-based projects.
+
+Qt is licensed under (L)GPL v3 license and can be downloaded from https://www.qt.io/download.
