@@ -1,27 +1,27 @@
 #include <QueueList.h>
 
 // Definition of output pins
-int led1Pin = 13;
-int led2Pin = 12;
-int led3Pin = 11;
+int greenLED = 7;
+int redLED = 8;
+int blueLED = 9;
 
-// Definition of input pin
-int inpPin = 9;
+// Definityion of input pin
+int inpPin = 10;
 
 // QueueList (FIFO) buffers generated numbers
-QueueList<short> numbers;
+QueueList<unsigned short> numbers;
 
 // Setup code runs once at initialization
 void setup() {
-  
+
   // Setup of serial communication
   Serial.begin(9600);
   Serial.setTimeout(100);
 
   // Initialization of pins
-  pinMode(led1Pin, OUTPUT);
-  pinMode(led2Pin, OUTPUT);
-  pinMode(led3Pin, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+  pinMode(redLED, OUTPUT);
+  pinMode(blueLED, OUTPUT);
   pinMode(inpPin, INPUT);
 }
 
@@ -36,13 +36,15 @@ void loop() {
 
   // Checking for a new input signal
   bool pressed = (digitalRead(inpPin) == HIGH);
-  if (!active && pressed && numbers.count() < 512) {
-    digitalWrite(led2Pin, HIGH);
-    numbers.push(number);
-    delay(50);
-    digitalWrite(led2Pin, LOW);
+
+  if (!active && pressed) {
+    if (numbers.count() < 256) {
+      numbers.push(number);
+    }
   }
   active = pressed;
+
+  digitalWrite(blueLED, (numbers.count() > 255 ? HIGH : LOW));
   
   // Parse serial commands
   if (Serial.available() > 0) {
@@ -56,18 +58,18 @@ void loop() {
         Serial.print((String) numbers.pop() + "\n");
         
         // Flash green led
-        digitalWrite(led3Pin, HIGH);
-        delay(50);
-        digitalWrite(led3Pin, LOW);
+        digitalWrite(greenLED, HIGH);
+        delay(5);
+        digitalWrite(greenLED, LOW);
       }
       
     } else if (input.equals("connect")) { // "connect" => "randuino"
         Serial.print("randuino\n");
 
-        // Flash red led
-        digitalWrite(led1Pin, HIGH);
+        // Flash blue led
+        digitalWrite(blueLED, HIGH);
         delay(50);
-        digitalWrite(led1Pin, LOW);
+        digitalWrite(blueLED, LOW);
         
     } else if (input.equals("buffer")) { // "buffer" => number of buffered elements
         Serial.print("B:" + (String) numbers.count() + "\n");
@@ -78,6 +80,10 @@ void loop() {
     } else {
       Serial.print("CMD_ERR: " + input + "\n");
       
+      // Flash red led
+      digitalWrite(redLED, HIGH);
+      delay(50);
+      digitalWrite(redLED, LOW);
     }
   } 
 
