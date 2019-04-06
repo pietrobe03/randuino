@@ -39,9 +39,11 @@ void loop() {
     // Command parser ("command" => answer)
     if (input.equals("single")) { // "single" => Random number
         
-        analogWrite(beeper, 128);
+        analogWrite(beeper, 128); // Start beeping
 
         int num = 0;
+        
+        // Measure the voltage of the input pin (random) and convert it into a random number
         for (int i = 0; i < 8; i++) {
           int t = 0;
           for (int j = 0; j < 8; j++) {
@@ -51,8 +53,8 @@ void loop() {
           num = num * 2 + (t % 2);
         }
         Serial.print((String) num + "\n");
-        analogWrite(beeper, 0);// Flash green led
-        digitalWrite(greenLED, HIGH);
+        analogWrite(beeper, 0); // Stop beeping
+        digitalWrite(greenLED, HIGH); // Flash green LED
         delay(15);
         digitalWrite(greenLED, LOW);
     } else if (input.equals("connect")) { // "connect" => "randuino"
@@ -66,7 +68,7 @@ void loop() {
     } else if (input.equals("heartbeat")) { // "heartbeat" => "still_alive"
         Serial.print("still_alive\n");
 
-    } else {
+    } else { // Unknown command
       Serial.print("CMD_ERR: " + input + "\n");
       // Flash red led
       digitalWrite(redLED, HIGH);
